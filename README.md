@@ -1,4 +1,12 @@
-# Introdução
+# Scylla ZMK
+
+Configuração ZMK do teclado **Scylla**. O Scylla usa a matriz e o shield do Lily58 (`lily58_left` / `lily58_right`), então o keymap segue a ordem de teclas do Lily58. A posição das teclas do Scylla está em `config/info.json` (Keymap Editor) e no layout físico dentro de `config/lily58.keymap` (ZMK Studio).
+
+- **Arquivos do firmware:** `scylla_left` vai na metade esquerda, `scylla_right` na direita. `settings_reset` apaga os pareamentos das duas metades.
+- **ZMK Studio:** roda na metade esquerda (a central, que conversa com o computador). Conecte a esquerda por USB, abra o [ZMK Studio](https://zmk.studio) e destrave segurando LOWER e apertando a tecla do canto superior direito (STUDIO).
+- Depois de editar pelo Studio, mudanças no `.keymap` só valem depois de "Restore Stock Settings" no Studio.
+
+## Introdução
 
 Para ter um bom entendimento da plataforma ZMK e tudo o que ela pode oferecer é interessante ler a documentação completa no site do [ZMK](https://zmk.dev/docs/user-setup).
 
@@ -49,7 +57,7 @@ Para flashear o firmware do teclado novo basta seguir os seguintes passos:
 ![telegram-cloud-photo-size-1-5040021887542996513-y](https://github.com/user-attachments/assets/217fe770-6b37-4470-a5f0-d6640a593a94)
 
 Feito isso, uma pasta igual um pendrive irá aparecer com o nome de "Nicenano".
-Basta copiar o arquivo LEFT para o teclado esquerdo e copiar o arquivo RIGHT no teclado direito.
+Basta copiar o arquivo `scylla_left` para o teclado esquerdo e copiar o arquivo `scylla_right` no teclado direito.
 
 ![image](https://github.com/user-attachments/assets/fec189f3-8293-4407-89ad-9f4268b701dc)
 
