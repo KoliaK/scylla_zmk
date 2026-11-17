@@ -106,13 +106,13 @@
  *   24 25 26 27 28 29                           30 31 32 33 34 35
  *   36 37 38 39 40 41                           44 45 46 47 48 49
  *
- *   Left thumbs (Alt, Space, SYM, F2, Tab)      Right thumbs (Del, Bspc, GUI, F6/Snip, NAV)
+ *   Left thumbs (Alt, Space, SYM, Tab, F2)      Right thumbs (Del, Bspc, GUI, NAV, F6/Snip)
  *     52 Alt   53 Space   42 SYM                  55 Del   54 Bspc   43 GUI
- *     50 F2    51 Tab                             57 F6    56 NAV
+ *     50 Tab   51 F2                              57 NAV   56 F6/Snip
  */
 
 / {
-    // SYM + NAV together = SYSTEM (Bluetooth, output, Studio). Toggle NAV on, then hold SYM.
+    // SYM + NAV held together = SYSTEM (Bluetooth, output, Studio).
     conditional_layers {
         compatible = "zmk,conditional-layers";
 
@@ -132,15 +132,15 @@
             // | ~ `   |  Q  |  W  |  E  |  R  |  T  |                       |  Y  |  U  |  I  |  O  |  P  |  ' "  |
             // | SHIFT |  A  |  S  |  D  |  F  |  G  |                       |  H  |  J  |  K  |  L  |  ;  | ENTER |
             // | CTRL  |  Z  |  X  |  C  |  V  |  B  |  SYM  |  GUI  |     |  N  |  M  |  ,  |  .  |  /  |  \ |  |
-            //                | F2 | TAB | ALT | SPACE |                      | BSPC | DEL | NAV | F6/SNIP |
-            //   SYM = hold, NAV = toggle, F6/SNIP = tap F6 / hold Win+Shift+S (Snipping Tool).
+            //                | TAB | F2 | ALT | SPACE |                      | BSPC | DEL | F6/SNIP | NAV |
+            //   SYM and NAV = hold, F6/SNIP = tap F6 / hold Win+Shift+S (Snipping Tool).
 
             bindings = <
       &kp ESC     &kp N1  &kp N2  &kp N3  &kp N4  &kp N5                           &kp N6  &kp N7  &kp N8    &kp N9   &kp N0    &kp MINUS
       &kp GRAVE   &kp Q   &kp W   &kp E   &kp R   &kp T                            &kp Y   &kp U   &kp I     &kp O    &kp P     &kp SQT
       &kp LSHFT   &kp A   &kp S   &kp D   &kp F   &kp G                            &kp H   &kp J   &kp K     &kp L    &kp SEMI  &kp RET
       &kp LCTRL   &kp Z   &kp X   &kp C   &kp V   &kp B   &mo SYM     &kp LGUI     &kp N   &kp M   &kp COMMA &kp DOT  &kp FSLH  &kp BSLH
-                                  &kp F2  &kp TAB &kp LALT &kp SPACE  &kp BSPC &kp DEL &tog NAV &mt LS(LG(S)) F6
+                                  &kp TAB &kp F2  &kp LALT &kp SPACE  &kp BSPC &kp DEL &mt LS(LG(S)) F6 &mo NAV
             >;
 
             sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
@@ -165,7 +165,7 @@
             >;
         };
 
-        // Navigation. Toggled with the right thumb key at position 56 (press again to leave).
+        // Navigation. Hold the right thumb key at position 57; the layer ends when you let go.
         // IJKL = arrows (inverted T). Number row = F-keys, since the base layer only has F2 and F6.
         nav_layer {
             display-name = "Nav";
@@ -184,7 +184,7 @@
             >;
         };
 
-        // Bluetooth, output and Studio. Active only while NAV is toggled on AND SYM is held.
+        // Bluetooth, output and Studio. Active only while NAV and SYM are both held.
         system_layer {
             display-name = "System";
             // ------------------------------------------------------------------------------------------------------
