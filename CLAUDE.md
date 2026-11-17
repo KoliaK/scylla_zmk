@@ -41,10 +41,10 @@ the rest is project knowledge from setting the keyboard up.
 
 ## Keymap
 
-- Layers: Base, SYM (hold position `42`) and NAV (hold position `57`). There is
+- Layers: Base, SYM (hold position `42`) and NAV (hold position `55`). There is
   no system layer and no gaming layer, by choice.
-- Thumb positions, left: `52` Alt, `53` Space, `42` SYM, `50` Tab, `51` F2.
-  Right: `55` Del, `54` Bspc, `43` GUI, `56` F6/Snip, `57` NAV. Everything else
+- Thumb positions, left: `50` Alt, `53` Space, `42` SYM, `52` Tab, `51` F2.
+  Right: `57` Del, `54` Bspc, `43` GUI, `56` F6/Snip, `55` NAV. Everything else
   follows the Lily58 order, 12 keys per row for the first three rows. The full
   map is in a comment above the `keymap` node.
 - SYM follows `reference_files/2-coding_layer.md`. Cells it leaves empty are
