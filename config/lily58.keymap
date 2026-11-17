@@ -7,7 +7,13 @@
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/bt.h>
-#include <dt-bindings/zmk/ext_power.h>
+#include <dt-bindings/zmk/outputs.h>
+
+// Layer numbers, in the order the layers appear in `keymap` below.
+#define BASE 0
+#define SYM 1
+#define NAV 2
+#define SYS 3
 
 /*
  * Scylla physical layout, for ZMK Studio. The Scylla uses the Lily58 matrix and
@@ -91,75 +97,110 @@
 /* Drop the stock Lily58 drawing so Studio only offers the Scylla one. */
 /delete-node/ &kata0510_lily58_layout;
 
-/ {
-    // Combo keys are a way to combine multiple keypresses to output a different key.
-    combos {
-        compatible = "zmk,combos";
+/*
+ * Key positions (index in each `bindings` list). Rows are listed top to bottom.
+ *
+ *   Left half                                   Right half
+ *    0  1  2  3  4  5                            6  7  8  9 10 11
+ *   12 13 14 15 16 17                           18 19 20 21 22 23
+ *   24 25 26 27 28 29                           30 31 32 33 34 35
+ *   36 37 38 39 40 41                           44 45 46 47 48 49
+ *
+ *   Left thumbs (Alt, Space, SYM, F2, Tab)      Right thumbs (Del, Bspc, GUI, F6/Snip, NAV)
+ *     52 Alt   53 Space   42 SYM                  55 Del   54 Bspc   43 GUI
+ *     50 F2    51 Tab                             57 F6    56 NAV
+ */
 
-        combo_clear_bluetooth {
-            timeout-ms = <50>; // Press all the below keys within 50ms to activate mapping
-            key-positions = <52 42 0>; // Press 52=LOWER, 42=[, 0=tilde
-            bindings = <&bt BT_CLR>; // activate clear bluetooth bindings for current channel
+/ {
+    // SYM + NAV together = SYSTEM (Bluetooth, output, Studio). Toggle NAV on, then hold SYM.
+    conditional_layers {
+        compatible = "zmk,conditional-layers";
+
+        tri_layer_system {
+            if-layers = <SYM NAV>;
+            then-layer = <SYS>;
         };
     };
 
     keymap {
         compatible = "zmk,keymap";
 
-        default_layer {
-            // ------------------------------------------------------------------------------------------------------------
-            // |   `      |  1  |  2  |  3   |  4   |  5   |                   |  6   |  7    |  8    |  9   |   0   |   -   |
-            // |  TAB     |  Q  |  W  |  E   |  R   |  T   |                   |  Y   |  U    |  I    |  O   |   P   |   =   |
-            // |hCTRL tESC|  A  |  S  |  D   |  F   |  G   |                   |  H   |  J    |  K    |  L   |   ;   |   '   |
-            // | SHIFT    |  Z  |  X  |  C   |  V   |  B   |   "["  |  |  "]"  |  N   |  M    |  ,    |  .   |   /   | SHIFT |
-            //                        | ALT  | GUI  | LOWER|  SPACE |  | BSPC  | ENTER| RAISE | CTRL  |
+        base_layer {
+            display-name = "Base";
+            // ------------------------------------------------------------------------------------------------------
+            // | ESC   |  1  |  2  |  3  |  4  |  5  |                       |  6  |  7  |  8  |  9  |  0  |  - _  |
+            // | ~ `   |  Q  |  W  |  E  |  R  |  T  |                       |  Y  |  U  |  I  |  O  |  P  |  ' "  |
+            // | SHIFT |  A  |  S  |  D  |  F  |  G  |                       |  H  |  J  |  K  |  L  |  ;  | ENTER |
+            // | CTRL  |  Z  |  X  |  C  |  V  |  B  |  SYM  |  GUI  |     |  N  |  M  |  ,  |  .  |  /  |  \ |  |
+            //                | F2 | TAB | ALT | SPACE |                      | BSPC | DEL | NAV | F6/SNIP |
+            //   SYM = hold, NAV = toggle, F6/SNIP = tap F6 / hold Win+Shift+S (Snipping Tool).
 
             bindings = <
-      &kp GRAVE  &kp N1  &kp N2    &kp N3     &kp N4    &kp N5                        &kp N6  &kp N7     &kp N8    &kp N9    &kp N0    &kp MINUS
-      &kp TAB    &kp Q   &kp W     &kp E      &kp R     &kp T                         &kp Y   &kp U      &kp I     &kp O     &kp P     &kp EQUAL
-&mt LCTRL ESC    &kp A   &kp S     &kp D      &kp F     &kp G                         &kp H   &kp J      &kp K     &kp L     &kp SEMI  &kp SQT
-    &kp LSHFT    &kp Z   &kp X     &kp C      &kp V     &kp B  &kp LBKT     &kp RBKT  &kp N   &kp M      &kp COMMA &kp DOT   &kp FSLH  &kp RSHFT
-                                   &kp LALT   &kp LMETA &mo 2  &kp SPACE    &kp BSPC  &kp RET &mo 1      &kp RCTRL
+      &kp ESC     &kp N1  &kp N2  &kp N3  &kp N4  &kp N5                           &kp N6  &kp N7  &kp N8    &kp N9   &kp N0    &kp MINUS
+      &kp GRAVE   &kp Q   &kp W   &kp E   &kp R   &kp T                            &kp Y   &kp U   &kp I     &kp O    &kp P     &kp SQT
+      &kp LSHFT   &kp A   &kp S   &kp D   &kp F   &kp G                            &kp H   &kp J   &kp K     &kp L    &kp SEMI  &kp RET
+      &kp LCTRL   &kp Z   &kp X   &kp C   &kp V   &kp B   &mo SYM     &kp LGUI     &kp N   &kp M   &kp COMMA &kp DOT  &kp FSLH  &kp BSLH
+                                  &kp F2  &kp TAB &kp LALT &kp SPACE  &kp BSPC &kp DEL &tog NAV &mt LS(LG(S)) F6
             >;
 
             sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
         };
 
-        raise_layer {
-            // ------------------------------------------------------------------------------------------------------------
-            // |  F12    |  F1 |  F2 |  F3  |  F4  |  F5  |                   |  F6  |   F7  |   F8  |  F9  |  F10  |  F11  |
-            // |   `     |  1  |  2  |  3   |  4   |  5   |                   |  6   |   7   |   8   |  9   |   0   |   -   |
-            // |CTRL/ESC |     |     |      |      |      |                   |  <-  |   ^   |   v   |  ->  |       |       |
-            // | SHIFT   |     |     |      |      |      |        |  |       |  +   |   -   |   =   |  [   |   ]   |   \   |
-            //                       |      |      |      |        |  |       |      |       |       |
+        // Coding symbols. Hold the left thumb key next to Space (position 42).
+        // Empty cells are transparent: they type the base-layer key.
+        sym_layer {
+            display-name = "Sym";
+            // ------------------------------------------------------------------------------------------------------
+            // |       |     |     |     |     |     |                       |  :  |  (  |  )  |     |     |       |
+            // |       |     |     |  <  |  >  |  !  |                       |  *  |  {  |  }  |     |     |       |
+            // |       |     |     |  &  |  |  |  /  |                       |  _  |  [  |  ]  |     |     |       |
+            // |       |     |     |     |     |     |           |     |     |  -  |  +  |  =  |     |     |       |
 
             bindings = <
-      &kp F12  &kp F1  &kp F2  &kp F3  &kp F4  &kp F5                   &kp F6       &kp F7     &kp F8     &kp F9    &kp F10   &kp F11
-    &kp GRAVE  &kp N1  &kp N2  &kp N3  &kp N4  &kp N5                   &kp N6       &kp N7     &kp N8     &kp N9    &kp N0    &kp MINUS
-&mt LCTRL ESC  &trans  &trans  &trans  &trans  &trans                   &kp LEFT     &kp DOWN   &kp UP     &kp RIGHT &trans    &trans
-   &kp LSHIFT  &trans  &trans  &trans  &trans  &trans  &trans  &trans   &kp KP_PLUS  &kp MINUS  &kp EQUAL  &kp LBKT  &kp RBKT  &kp RIGHT_SHIFT
-                               &trans  &trans  &trans  &trans  &trans   &trans       &trans     &trans
+      &trans   &trans  &trans  &trans  &trans  &trans                            &kp COLON  &kp LPAR  &kp RPAR  &trans  &trans  &trans
+      &trans   &trans  &trans  &kp LT  &kp GT  &kp EXCL                          &kp STAR   &kp LBRC  &kp RBRC  &trans  &trans  &trans
+      &trans   &trans  &trans  &kp AMPS &kp PIPE &kp FSLH                        &kp UNDER  &kp LBKT  &kp RBKT  &trans  &trans  &trans
+      &trans   &trans  &trans  &trans  &trans  &trans  &trans  &trans            &kp MINUS  &kp PLUS  &kp EQUAL &trans  &trans  &trans
+                               &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
             >;
-
-            sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
         };
 
-        lower_layer {
-            // ------------------------------------------------------------------------------------------------------------
-            // |          | BT1     | BT2    |  BT3 |  BT4  |  BT5 |                    |      |       |       |      |       |STUDIO |
-            // |          |         |        |      |       |      |                    |      |       |       |  [   |   ]   |   \   |
-            // |   ~      |  !      |  @     |  #   |  $    |  %   |                    |  ^   |  &    |  *    |  (   |   )   |   _   |
-            // | SHIFT    |  EP_ON  | EP_OFF |      |  (    |  {   |       |  |   DEL   |  }   |  )    |  +    |  {   |   }   | SHIFT |
-            //                               |      |       |      |       |  |         |      |       |       |
-            bindings = <
-    &trans       &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4                  &trans     &trans      &trans          &trans     &trans    &studio_unlock
-    &trans       &trans        &trans        &trans        &trans        &trans                        &trans     &trans      &trans          &kp LBKT   &kp RBKT  &kp BSLH
-    &kp TILDE    &kp EXCL      &kp AT        &kp HASH      &kp DOLLAR    &kp PRCNT                     &kp CARET  &kp AMPS    &kp KP_MULTIPLY &kp LPAR   &kp RPAR  &kp UNDER
-    &kp LSHIFT   &trans        &trans        &kp LPAR      &kp LBRC      &trans    &trans    &kp DEL   &kp RBRC   &kp RPAR    &kp KP_PLUS     &kp LBRC   &kp RBRC  &kp RSHFT
-                                             &trans        &trans        &trans    &trans    &trans    &trans     &trans      &trans    
-            >;
+        // Navigation. Toggled with the right thumb key at position 56 (press again to leave).
+        // IJKL = arrows (inverted T). Number row = F-keys, since the base layer only has F2 and F6.
+        nav_layer {
+            display-name = "Nav";
+            // ------------------------------------------------------------------------------------------------------
+            // |       | F1  | F2  | F3  | F4  | F5  |                       | F6  | F7  | F8  | F9  | F10 | F11   |
+            // |       |     |     |     |     |     |                       |     |HOME |  ^  | END |PG UP| F12   |
+            // |       |     |     |     |     |     |                       |     |  <  |  v  |  >  |PG DN|       |
+            // |       |     |     |     |     |     |           |     |     |     |     |     |     |     |       |
 
-            sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
+            bindings = <
+      &trans   &kp F1  &kp F2  &kp F3  &kp F4  &kp F5                           &kp F6  &kp F7    &kp F8    &kp F9     &kp F10    &kp F11
+      &trans   &trans  &trans  &trans  &trans  &trans                            &trans  &kp HOME  &kp UP    &kp END    &kp PG_UP  &kp F12
+      &trans   &trans  &trans  &trans  &trans  &trans                            &trans  &kp LEFT  &kp DOWN  &kp RIGHT  &kp PG_DN  &trans
+      &trans   &trans  &trans  &trans  &trans  &trans  &trans  &trans            &trans  &trans    &trans    &trans     &trans     &trans
+                               &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+            >;
+        };
+
+        // Bluetooth, output and Studio. Active only while NAV is toggled on AND SYM is held.
+        system_layer {
+            display-name = "System";
+            // ------------------------------------------------------------------------------------------------------
+            // |       | BT1 | BT2 | BT3 | BT4 | BT5 |                       |     |     |     |     |     |STUDIO |
+            // |       |USB/BLE|   |     |     |     |                       |     |     |     |     |     |       |
+            // |       |     |     |     |     |     |                       |     |     |     |     |     |       |
+            // |BT CLR |     |     |     |     |     |           |     |     |     |     |     |     |     |       |
+            //   BT1..BT5 select the Bluetooth profile 0..4. BT CLR forgets the current profile's pairing.
+
+            bindings = <
+      &trans        &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4                      &trans  &trans  &trans  &trans  &trans  &studio_unlock
+      &trans        &out OUT_TOG  &trans        &trans        &trans        &trans                            &trans  &trans  &trans  &trans  &trans  &trans
+      &trans        &trans        &trans        &trans        &trans        &trans                            &trans  &trans  &trans  &trans  &trans  &trans
+      &bt BT_CLR    &trans        &trans        &trans        &trans        &trans  &trans  &trans            &trans  &trans  &trans  &trans  &trans  &trans
+                                                &trans        &trans        &trans  &trans  &trans  &trans    &trans  &trans
+            >;
         };
     };
 };
