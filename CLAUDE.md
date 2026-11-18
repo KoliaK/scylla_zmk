@@ -129,5 +129,22 @@ The user downloads the `firmware` artifact from the bottom of the run page
 - A key that types nothing is usually hardware, not the keymap: the `\|` key was
   a bad switch. Reseat it, then swap it with a working neighbour to tell a bad
   switch from a bad socket.
+- The `,` key died after a switch swap, and the keymap was fine (`&kp COMMA`,
+  position 46). A hot-swap socket's left leaf had a cracked solder joint; the
+  fix was reflowing it. Single-part meter checks all passed because the probe
+  tip pressed the crack shut, so do not trust a lone `000` on a joint. To find
+  a dead key without guessing:
+  1. Hold SYM and press it. If the SYM symbol does not type either, the
+     matrix never sees the key, so it is hardware.
+  2. With the keyboard on, touch the two socket leaves together with tweezers.
+     If the key types, only the switch-to-socket contact is bad.
+  3. Board off, meter in diode mode, switch removed, touching lightly: red on
+     the key's column pin, black on each socket leaf and on both diode legs.
+     Compare with a working key in the same column. A good key reads `000` on
+     the column-side leaf and `OL` on the other, and about `0.5` through the
+     diode (stripe end).
+  Nice!nano pin labels: rows 0-4 are `024` `100` `011` `104` `106`; right
+  columns 6-11 are `009` `010` `111` `113` `115` `002`; left columns 0-5 are
+  `002` `115` `113` `111` `010` `009`.
 - The user is new to git, forks and ZMK. Explain basics, go one step at a time,
   and say what each command does.
