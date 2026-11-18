@@ -43,8 +43,8 @@ the rest is project knowledge from setting the keyboard up.
 
 - Layers: Base, SYM (hold position `42`) and NAV (hold position `55`). There is
   no system layer and no gaming layer, by choice.
-- Thumb positions, left: `50` Alt, `53` Space, `42` SYM, `52` Tab, `51` F2.
-  Right: `57` Del, `54` Bspc, `43` GUI, `56` F6/Snip, `55` NAV. Everything else
+- Thumb positions, left: `50` Alt, `53` Space, `42` SYM, `52` Tab, `51` F6/Snip.
+  Right: `57` Del, `54` Bspc, `43` GUI, `56` F2, `55` NAV. Everything else
   follows the Lily58 order, 12 keys per row for the first three rows. The full
   map is in a comment above the `keymap` node.
 - SYM follows `reference_files/2-coding_layer.md`. Cells it leaves empty are
@@ -54,7 +54,7 @@ the rest is project knowledge from setting the keyboard up.
 - F6/Snip is `&mt LS(LG(S)) F6`: tap for F6, hold for Win+Shift+S (Snipping
   Tool).
 - Bluetooth clear is a combo: `~`, `\|` and F2 pressed together (positions `12`,
-  `49`, `51`). It clears only the current profile's pairing with the PC. It does
+  `49`, `56`). It clears only the current profile's pairing with the PC. It does
   not touch USB or the link between the halves.
 - Every layer must list exactly 58 bindings. After editing, run the check below;
   the combo's single binding shows up as a `1` and is expected.

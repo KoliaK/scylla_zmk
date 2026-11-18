@@ -104,9 +104,9 @@
  *   24 25 26 27 28 29                           30 31 32 33 34 35
  *   36 37 38 39 40 41                           44 45 46 47 48 49
  *
- *   Left thumbs (Tab, Space, SYM, Alt, F2)      Right thumbs (NAV, Bspc, GUI, Del, F6/Snip)
+ *   Left thumbs (Tab, Space, SYM, Alt, F6/Snip) Right thumbs (NAV, Bspc, GUI, Del, F2)
  *     52 Tab   53 Space   42 SYM                  55 NAV   54 Bspc   43 GUI
- *     50 Alt   51 F2                              57 Del   56 F6/Snip
+ *     50 Alt   51 F6/Snip                         57 Del   56 F2
  */
 
 / {
@@ -114,10 +114,10 @@
         compatible = "zmk,combos";
 
         // Forget the pairing saved on the current Bluetooth profile, so the keyboard shows up
-        // as a new device again. Press ~, \ and F2 together (positions 12, 49, 51).
+        // as a new device again. Press ~, \ and F2 together (positions 12, 49, 56).
         combo_clear_bluetooth {
             timeout-ms = <100>;
-            key-positions = <12 49 51>;
+            key-positions = <12 49 56>;
             bindings = <&bt BT_CLR>;
         };
     };
@@ -132,7 +132,7 @@
             // | ~ `   |  Q  |  W  |  E  |  R  |  T  |                       |  Y  |  U  |  I  |  O  |  P  |  ' "  |
             // | SHIFT |  A  |  S  |  D  |  F  |  G  |                       |  H  |  J  |  K  |  L  |  ;  | ENTER |
             // | CTRL  |  Z  |  X  |  C  |  V  |  B  |  SYM  |  GUI  |     |  N  |  M  |  ,  |  .  |  /  |  \ |  |
-            //                | ALT | F2 | TAB | SPACE |                      | BSPC | NAV | F6/SNIP | DEL |
+            //                | ALT | F6/SNIP | TAB | SPACE |                  | BSPC | NAV | F2 | DEL |
             //   SYM and NAV = hold, F6/SNIP = tap F6 / hold Win+Shift+S (Snipping Tool).
 
             bindings = <
@@ -140,7 +140,7 @@
       &kp GRAVE   &kp Q   &kp W   &kp E   &kp R   &kp T                            &kp Y   &kp U   &kp I     &kp O    &kp P     &kp SQT
       &kp LSHFT   &kp A   &kp S   &kp D   &kp F   &kp G                            &kp H   &kp J   &kp K     &kp L    &kp SEMI  &kp RET
       &kp LCTRL   &kp Z   &kp X   &kp C   &kp V   &kp B   &mo SYM     &kp LGUI     &kp N   &kp M   &kp COMMA &kp DOT  &kp FSLH  &kp BSLH
-                                  &kp LALT &kp F2 &kp TAB &kp SPACE   &kp BSPC &mo NAV &mt LS(LG(S)) F6 &kp DEL
+                                  &kp LALT &mt LS(LG(S)) F6 &kp TAB &kp SPACE   &kp BSPC &mo NAV &kp F2 &kp DEL
             >;
 
             sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
