@@ -41,8 +41,9 @@ the rest is project knowledge from setting the keyboard up.
 
 ## Keymap
 
-- Layers: Base, SYM (hold position `42`) and NAV (hold position `55`). There is
-  no system layer and no gaming layer, by choice.
+- Layers: Base, SYM (hold position `42`), STENO (toggled by a combo) and NAV
+  (hold position `55`). There is no system layer and no gaming layer, by choice.
+  STENO sits below NAV on purpose, so a held NAV still shows its arrows.
 - Thumb positions, left: `50` Alt, `53` Space, `42` SYM, `52` Tab, `51` F6/Snip.
   Right: `57` Del, `54` Bspc, `43` GUI, `56` F2, `55` NAV. Everything else
   follows the Lily58 order, 12 keys per row for the first three rows. The full
@@ -56,8 +57,18 @@ the rest is project knowledge from setting the keyboard up.
 - Bluetooth clear is a combo: `~`, `\|` and F2 pressed together (positions `12`,
   `49`, `56`). It clears only the current profile's pairing with the PC. It does
   not touch USB or the link between the halves.
+- STENO is for Plover in keyboard mode: Esc and `-` pressed together (positions
+  `0` and `11`) toggle it, from any layer. Each key sends the QWERTY key
+  Plover's default map expects, so Plover needs no key setup. Q-row is the
+  number bar, A-row and Z-row are the steno rows, thumbs are the vowels
+  (A `53`, O `42`, E `43`, U `54`), `-D` and `-Z` are on Enter and `\|`. Alt,
+  Tab and NAV pass through. It needs `CONFIG_ZMK_HID_REPORT_TYPE_NKRO=y` in
+  `config/lily58.conf` (may not work in some BIOS/UEFI). Plover has its own
+  on/off switch and must be on exactly while the layer is on; there is no key
+  for that, so it is switched by hand (tray icon, or the `{PLOVER:TOGGLE}`
+  stroke).
 - Every layer must list exactly 58 bindings. After editing, run the check below;
-  the combo's single binding shows up as a `1` and is expected.
+  each combo's single binding shows up as a `1` and is expected.
 
 ```python
 import re

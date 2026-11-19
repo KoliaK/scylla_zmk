@@ -8,10 +8,12 @@
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/bt.h>
 
-// Layer numbers, in the order the layers appear in `keymap` below.
+// Layer numbers, in the order the layers appear in `keymap` below. STENO sits below NAV so that a
+// held NAV still shows its arrows on top of it.
 #define BASE 0
 #define SYM 1
-#define NAV 2
+#define STENO 2
+#define NAV 3
 
 /*
  * Scylla physical layout, for ZMK Studio. The Scylla uses the Lily58 matrix and
@@ -120,6 +122,14 @@
             key-positions = <12 49 56>;
             bindings = <&bt BT_CLR>;
         };
+
+        // Switch the Steno layer on and off. Press ESC and - together (positions 0 and 11, the
+        // outer top corners). Works from any layer; both keys are unbound on the Steno layer.
+        combo_steno {
+            timeout-ms = <100>;
+            key-positions = <0 11>;
+            bindings = <&tog STENO>;
+        };
     };
 
     keymap {
@@ -162,6 +172,30 @@
       &trans   &trans  &trans  &kp AMPS &kp PIPE &kp FSLH                        &kp SQT    &kp LBKT  &kp RBKT  &trans  &trans  &trans
       &trans   &trans  &trans  &trans  &trans  &kp BSLH &trans  &trans            &kp DQT    &kp PLUS  &kp EQUAL &trans  &trans  &trans
                                &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+            >;
+        };
+
+        // Stenography for Plover in keyboard mode. Toggle with ESC + - (see combo_steno). Every key
+        // sends the QWERTY key Plover's default map expects, so Plover needs no key setup: this layer
+        // only moves those keys to other positions. Q-row = number bar, A-row = top steno row,
+        // Z-row = bottom steno row; the thumbs are the vowels (A O left, E U right).
+        // Alt (50), Tab (52) and NAV (55) are transparent: they use the base layer's keys.
+        // Unused keys are &none so no stray letter reaches Plover.
+        steno_layer {
+            display-name = "Steno";
+            // ------------------------------------------------------------------------------------------------------
+            // |       |     |     |     |     |     |                       |     |     |     |     |     |       |
+            // |       |  #  |  #  |  #  |  #  |  #  |                       |  #  |  #  |  #  |  #  |  #  |       |
+            // |       |  S  |  T  |  P  |  H  |  *  |                       |  *  | -F  | -P  | -L  | -T  |  -D   |
+            // |       |  S  |  K  |  W  |  R  |  *  |   O   |   E   |       |  *  | -R  | -B  | -G  | -S  |  -Z   |
+            //                | Alt |     | Tab |  A  |                         |  U  | NAV |     |     |
+
+            bindings = <
+      &none  &none   &none   &none   &none   &none                            &none   &none   &none   &none   &none    &none
+      &none  &kp N1  &kp N2  &kp N3  &kp N4  &kp N5                           &kp N6  &kp N7  &kp N8  &kp N9  &kp N0   &none
+      &none  &kp Q   &kp W   &kp E   &kp R   &kp T                            &kp Y   &kp U   &kp I   &kp O   &kp P    &kp LBKT
+      &none  &kp A   &kp S   &kp D   &kp F   &kp G   &kp V   &kp N            &kp H   &kp J   &kp K   &kp L   &kp SEMI &kp SQT
+                              &trans  &none   &trans  &kp C   &kp M   &trans  &none   &none
             >;
         };
 
