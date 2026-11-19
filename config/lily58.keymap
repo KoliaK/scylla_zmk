@@ -151,16 +151,16 @@
         sym_layer {
             display-name = "Sym";
             // ------------------------------------------------------------------------------------------------------
-            // |       |     |     |     |     |     |                       |  '  |  (  |  )  |     |     |       |
-            // |       |     |     |  <  |  >  |  !  |                       |  "  |  {  |  }  |     |     |       |
-            // |       |     |     |  &  |  |  |  /  |                       |  _  |  [  |  ]  |     |     |       |
-            // |       |     |     |     |     |  \  |           |     |     |  -  |  +  |  =  |     |     |       |
+            // |       |     |     |     |     |     |                       |  _  |  (  |  )  |     |     |       |
+            // |       |     |     |  <  |  >  |  !  |                       |  -  |  {  |  }  |     |     |       |
+            // |       |     |     |  &  |  |  |  /  |                       |  '  |  [  |  ]  |     |     |       |
+            // |       |     |     |     |     |  \  |           |     |     |  "  |  +  |  =  |     |     |       |
 
             bindings = <
-      &trans   &trans  &trans  &trans  &trans  &trans                            &kp SQT    &kp LPAR  &kp RPAR  &trans  &trans  &trans
-      &trans   &trans  &trans  &kp LT  &kp GT  &kp EXCL                          &kp DQT    &kp LBRC  &kp RBRC  &trans  &trans  &trans
-      &trans   &trans  &trans  &kp AMPS &kp PIPE &kp FSLH                        &kp UNDER  &kp LBKT  &kp RBKT  &trans  &trans  &trans
-      &trans   &trans  &trans  &trans  &trans  &kp BSLH &trans  &trans            &kp MINUS  &kp PLUS  &kp EQUAL &trans  &trans  &trans
+      &trans   &trans  &trans  &trans  &trans  &trans                            &kp UNDER  &kp LPAR  &kp RPAR  &trans  &trans  &trans
+      &trans   &trans  &trans  &kp LT  &kp GT  &kp EXCL                          &kp MINUS  &kp LBRC  &kp RBRC  &trans  &trans  &trans
+      &trans   &trans  &trans  &kp AMPS &kp PIPE &kp FSLH                        &kp SQT    &kp LBKT  &kp RBKT  &trans  &trans  &trans
+      &trans   &trans  &trans  &trans  &trans  &kp BSLH &trans  &trans            &kp DQT    &kp PLUS  &kp EQUAL &trans  &trans  &trans
                                &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
             >;
         };
