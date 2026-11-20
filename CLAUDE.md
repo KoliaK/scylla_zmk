@@ -45,13 +45,14 @@ the rest is project knowledge from setting the keyboard up.
   (hold position `55`). There is no system layer and no gaming layer, by choice.
   STENO sits below NAV on purpose, so a held NAV still shows its arrows.
 - Thumb positions, left: `50` Alt, `53` Space, `42` SYM, `52` Tab, `51` F6/Snip.
-  Right: `57` Del, `54` Bspc, `43` GUI, `56` F2, `55` NAV. Everything else
+  Right: `57` Shift, `54` Bspc, `43` GUI, `56` F2, `55` NAV. Everything else
   follows the Lily58 order, 12 keys per row for the first three rows. The full
-  map is in a comment above the `keymap` node.
+  map is in a comment above the `keymap` node. Del sits above Enter (position
+  `23`), where `'` used to be; quotes are on SYM only.
 - SYM follows `reference_files/2-coding_layer.md`. Cells it leaves empty are
   `&trans`, so they type the base key.
 - NAV has IJKL arrows, Home and End on U and O, PgUp and PgDn on P and `;`, and
-  F1-F12 on the number row (F11 on `-`, F12 on `'`). Esc stays Esc.
+  F1-F12 on the number row (F11 on `-`, F12 at position `23`, above Enter). Esc stays Esc.
 - F6/Snip is `&mt LS(LG(S)) F6`: tap for F6, hold for Win+Shift+S (Snipping
   Tool).
 - Bluetooth clear is a combo: `~`, `\|` and F2 pressed together (positions `12`,

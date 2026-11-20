@@ -106,9 +106,9 @@
  *   24 25 26 27 28 29                           30 31 32 33 34 35
  *   36 37 38 39 40 41                           44 45 46 47 48 49
  *
- *   Left thumbs (Tab, Space, SYM, Alt, F6/Snip) Right thumbs (NAV, Bspc, GUI, Del, F2)
+ *   Left thumbs (Tab, Space, SYM, Alt, F6/Snip) Right thumbs (NAV, Bspc, GUI, Shift, F2)
  *     52 Tab   53 Space   42 SYM                  55 NAV   54 Bspc   43 GUI
- *     50 Alt   51 F6/Snip                         57 Del   56 F2
+ *     50 Alt   51 F6/Snip                         57 Shift 56 F2
  */
 
 / {
@@ -139,18 +139,18 @@
             display-name = "Base";
             // ------------------------------------------------------------------------------------------------------
             // | ESC   |  1  |  2  |  3  |  4  |  5  |                       |  6  |  7  |  8  |  9  |  0  |  - _  |
-            // | ~ `   |  Q  |  W  |  E  |  R  |  T  |                       |  Y  |  U  |  I  |  O  |  P  |  ' "  |
+            // | ~ `   |  Q  |  W  |  E  |  R  |  T  |                       |  Y  |  U  |  I  |  O  |  P  |  DEL  |
             // | SHIFT |  A  |  S  |  D  |  F  |  G  |                       |  H  |  J  |  K  |  L  |  ;  | ENTER |
             // | CTRL  |  Z  |  X  |  C  |  V  |  B  |  SYM  |  GUI  |     |  N  |  M  |  ,  |  .  |  /  |  \ |  |
-            //                | ALT | F6/SNIP | TAB | SPACE |                  | BSPC | NAV | F2 | DEL |
+            //                | ALT | F6/SNIP | TAB | SPACE |                  | BSPC | NAV | F2 | SHIFT |
             //   SYM and NAV = hold, F6/SNIP = tap F6 / hold Win+Shift+S (Snipping Tool).
 
             bindings = <
       &kp ESC     &kp N1  &kp N2  &kp N3  &kp N4  &kp N5                           &kp N6  &kp N7  &kp N8    &kp N9   &kp N0    &kp MINUS
-      &kp GRAVE   &kp Q   &kp W   &kp E   &kp R   &kp T                            &kp Y   &kp U   &kp I     &kp O    &kp P     &kp SQT
+      &kp GRAVE   &kp Q   &kp W   &kp E   &kp R   &kp T                            &kp Y   &kp U   &kp I     &kp O    &kp P     &kp DEL
       &kp LSHFT   &kp A   &kp S   &kp D   &kp F   &kp G                            &kp H   &kp J   &kp K     &kp L    &kp SEMI  &kp RET
       &kp LCTRL   &kp Z   &kp X   &kp C   &kp V   &kp B   &mo SYM     &kp LGUI     &kp N   &kp M   &kp COMMA &kp DOT  &kp FSLH  &kp BSLH
-                                  &kp LALT &mt LS(LG(S)) F6 &kp TAB &kp SPACE   &kp BSPC &mo NAV &kp F2 &kp DEL
+                                  &kp LALT &mt LS(LG(S)) F6 &kp TAB &kp SPACE   &kp BSPC &mo NAV &kp F2 &kp RSHFT
             >;
 
             sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
